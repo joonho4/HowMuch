@@ -1,0 +1,147 @@
+{
+    "recommendation": {
+        "tripPlan": {
+            "day1": {
+                "morningActivity": {
+                    "activityName": "한라산 등반",
+                    "description": "자연 탐험 테마에 맞춰 제주도의 대표적인 명소인 한라산을 등반합니다. 한라산은 1950m의 높이를 가진 화산으로 아름다운 자연 풍경을 즐길 수 있습니다.",
+                    "imageURL": "https://upload.wikimedia.org/wikipedia/commons/1/12/Hallasan_2.JPG",
+                    "websiteURL": "http://www.hallasan.go.kr/"
+                },
+                "lunch": {
+                    "place": "섭지코지해녀의집",
+                    "description": "제주도에서 기다림 맡긴 싱싱한 해산물을 즐길 수 있는 식당입니다. 2인분 평균 가격은 60,000원입니다.",
+                    "imageURL": null,
+                    "websiteURL": null
+                },
+                "afternoonActivity": {
+                    "activityName": "우도 레저 스포츠",
+                    "description": "우도에서는 다양한 레저 스포츠를 즐길 수 있습니다. 자전거 타기, 스쿠버 다이빙 등을 체험해봅니다.",
+                    "imageURL": "https://www.visitjeju.net/u/gQ1",
+                    "websiteURL": "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000021816"
+                },
+                "dinner": {
+                    "place": "제주도민이 사랑하는 도민식당",
+                    "description": "제주도민들이 자주 찾는 도민식당에서 제주도 특산품 음식을 즐겨보세요. 2인분 평균 가격은 40,000원입니다.",
+                    "imageURL": null,
+                    "websiteURL": null
+                },
+                "accommodation": {
+                    "name": "롯데리조트 제주",
+                    "description": "아름다운 바다 전망을 자랑하는 롯데리조트 제주에서 하루를 마무리합니다. 1박 기준 가격은 200,000원입니다.",
+                    "imageURL": "https://www.lottehotel.com/content/dam/lotte-hotel/lotte/jeju/overview/overview-02.jpg",
+                    "websiteURL": "https://www.lottehotel.com/jeju-ko.html"
+                }
+            },
+            "day2": {
+                "morningActivity": {
+                    "activityName": "카멜리아 힐 자연 탐방",
+                    "description": "제주도의 아름다운 자연을 느낄 수 있는 카멜리아 힐에서의 아침산책을 즐겨보세요.",
+                    "imageURL": "http://www.jeju.go.kr/cameliahill/intro.htm",
+                    "websiteURL": "http://www.jeju.go.kr/cameliahill/intro.htm"
+                },
+                "lunch": {
+                    "place": "제주갈치조림",
+                    "description": "제주도의 대표적인 음식인 갈치조림을 먹어볼 수 있는 식당입니다. 2인분 평균 가격은 50,000원입니다.",
+                    "imageURL": null,
+                    "websiteURL": null
+                },
+                "afternoonActivity": {
+                    "activityName": "마라도 레저 스포츠",
+                    "description": "조류 관찰, 레저 스포츠 등 다양한 활동을 즐길 수 있는 마라도에서 오후를 보내세요.",
+                    "imageURL": "https://www.visitjeju.net/u/2DP",
+                    "websiteURL": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500471"
+                },
+                "dinner": {
+                    "place": "제주흑돼지왕",
+                    "description": "제주의 대표 음식인 흑돼지구이를 먹을 수 있는 식당입니다. 2인분 평균 가격은 70,000원입니다.",
+                    "imageURL": null,
+                    "websiteURL": null
+                },
+                "accommodation": {
+                    "name": "롯데리조트 제주",
+                    "description": "롯데리조트에서 두번째 밤을 보내며 여행을 마무리합니다. 1박 기준 가격은 200,000원입니다.",
+                    "imageURL": "https://www.lottehotel.com/content/dam/lotte-hotel/lotte/jeju/overview/overview-02.jpg",
+                    "websiteURL": "https://www.lottehotel.com/jeju-ko.html"
+                }
+            },
+            "totalExpense": "1420000"
+        }
+    }
+}
+{
+    "recommendation": {
+        "travelPlan": {
+            "day1": {
+                "activity": "부산 해운대 해수욕장 방문 - 자연 탐험 및 레저 스포츠",
+                "activityWebsite": "http://www.haeundae.go.kr/en/",
+                "meal": {
+                    "lunch": {
+                        "restaurantName": "바다향",
+                        "averagePrice": 15000,
+                        "cuisine": "해산물",
+                        "website": "아직 가져올 수 없습니다. null"
+                    },
+                    "dinner": {
+                        "restaurantName": "신선설농탕",
+                        "averagePrice": 10000,
+                        "cuisine": "한식",
+                        "website": "https://www.sinsunseolnongtang.com"
+                    }
+                },
+                "accommodation": {
+                    "place": "파라다이스 호텔 부산",
+                    "price": 250000,
+                    "website": "https://www.paradisehotel.co.kr"
+                }
+            },
+            "day2": {
+                "activity": "부산 국립공원 탐방 - 자연 탐험",
+                "activityWebsite": "http://english.knps.or.kr/",
+                "meal": {
+                    "lunch": {
+                        "restaurantName": "대박횟집",
+                        "averagePrice": 15000,
+                        "cuisine": "해산물",
+                        "website": "아직 가져올 수 없습니다. null"
+                    },
+                    "dinner": {
+                        "restaurantName": "밀면정식",
+                        "averagePrice": 8000,
+                        "cuisine": "한식",
+                        "website": "아직 가져올 수 없습니다. null"
+                    }
+                },
+                "accommodation": {
+                    "place": "파라다이스 호텔 부산",
+                    "price": 250000,
+                    "website": "https://www.paradisehotel.co.kr"
+                }
+            },
+            "day3": {
+                "activity": "태종대 등산 - 자연 탐험",
+                "activityWebsite": "http://tj.busan.go.kr/html/hb/hb.html",
+                "meal": {
+                    "lunch": {
+                        "restaurantName": "솔짱 돼지국밥",
+                        "averagePrice": 8000,
+                        "cuisine": "한식",
+                        "website": "http://www.soljjang.com"
+                    },
+                    "dinner": {
+                        "restaurantName": "아지매국밥",
+                        "averagePrice": 8000,
+                        "cuisine": "한식",
+                        "website": "아직 가져올 수 없습니다. null"
+                    }
+                },
+                "accommodation": {
+                    "place": "파라다이스 호텔 부산",
+                    "price": 250000,
+                    "website": "https://www.paradisehotel.co.kr"
+                }
+            },
+            "totalCost": 979000
+        }
+    }
+}
