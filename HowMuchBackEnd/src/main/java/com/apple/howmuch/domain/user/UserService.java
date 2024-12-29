@@ -1,6 +1,7 @@
 package com.apple.howmuch.domain.user;
 
 
+import com.apple.howmuch.domain.trip.TripPlanResponse;
 import com.apple.howmuch.global.exception.ErrorCode;
 import com.apple.howmuch.global.exception.Exceptions;
 import com.apple.howmuch.global.jwt.*;

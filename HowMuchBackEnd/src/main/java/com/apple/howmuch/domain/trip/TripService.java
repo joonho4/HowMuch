@@ -46,6 +46,8 @@ public class TripService {
 
         TripPlan tripPlan = new TripPlan();
         tripPlan.setTotalExpense(request.getTotalExpense());
+        tripPlan.setThema(request.getThema());
+        tripPlan.setPlace(request.getPlace());
         tripPlan.setUser(user);
 
         log.info("Email : {}", email);

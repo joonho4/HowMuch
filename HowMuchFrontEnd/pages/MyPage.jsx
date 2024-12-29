@@ -1,21 +1,57 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { BottomNav } from '../components';
+import { getProfile } from '../api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MyPage = () => {
-  const courseData = [
-    { id: '1', location: '부산', theme: '바다, 맛집', people: '6명', budget: '870,000원', isFavorite: true },
-    { id: '2', location: '부산', theme: '바다, 맛집', people: '6명', budget: '870,000원', isFavorite: false },
-    { id: '3', location: '부산', theme: '바다, 맛집', people: '6명', budget: '870,000원', isFavorite: true },
-    { id: '4', location: '부산', theme: '바다, 맛집', people: '6명', budget: '870,000원', isFavorite: false },
-  ];
+  const [userInfo, setUserInfo] = useState(null);
+  const [courseData, setCourseData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  const fetchUserData = async () => {
+    try {
+        const token = await AsyncStorage.getItem('accessToken');
+        console.log('저장된 토큰:', token);
+        
+        if (!token) {
+            throw new Error('토큰이 없습니다');
+        }
+        
+        const userData = await getProfile({ accessToken: token });
+        setUserInfo(userData);
+        // tripPlans에서 dayPlans 추출
+        if (userData.tripPlans && userData.tripPlans.length > 0) {
+            const dayPlans = userData.tripPlans[0].dayPlans;
+            console.log('Day Plans:', JSON.stringify(dayPlans, null, 2));
+            setCourseData(dayPlans.map(day => ({
+                id: day.id,
+                location: day.morningActivity.activityName,
+                theme: `${day.morningActivity.activityName}, ${day.afternoonActivity.activityName}`,
+                budget: `${day.lunch.averagePrice + day.dinner.averagePrice}원`,
+                isFavorite: userData.tripPlans[0].favorite
+            })));
+        }
+        
+        setLoading(false);
+    } catch (error) {
+        console.error('프로필 조회 에러:', error);
+        setLoading(false);
+    }
+};
+
+
   const favoriteCount = courseData.filter(course => course.isFavorite).length;
 
   const renderCourseCard = ({ item }) => (
     <View style={styles.courseCard}>
       <Image
-        source={{ uri: 'https://via.placeholder.com/150' }} // 여기에 이미지 URL을 추가하세요.
+        source={{ uri: item.imageUrl || 'https://via.placeholder.com/150' }}
         style={styles.courseImage}
       />
       <View style={styles.cardContent}>
@@ -35,18 +71,25 @@ const MyPage = () => {
     </View>
   );
 
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.centerContent]}>
+        <Text>로딩 중...</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-      {/* 사용자 정보 */}
       <View style={styles.header}>
         <View style={styles.profileContainer}>
           <Image
-            source={require('../assets/pngwing.com.png')} // 프로필 이미지 URL 추가
+            source={require('../assets/pngwing.com.png')}
             style={styles.profileImage}
           />
           <View>
-            <Text style={styles.profileName}>김도영 님</Text>
-            <Text style={styles.profileAge}>www@gmail.com</Text>
+            <Text style={styles.profileName}>{userInfo?.name || '사용자'} 님</Text>
+            <Text style={styles.profileAge}>{userInfo?.email || ''}</Text>
           </View>
         </View>
         <View style={styles.statsContainer}>
@@ -61,22 +104,22 @@ const MyPage = () => {
         </View>
       </View>
 
-      {/* 코스 리스트 */}
       <FlatList
         data={courseData}
         renderItem={renderCourseCard}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContainer}
+        ListEmptyComponent={() => (
+          <Text style={styles.emptyText}>저장된 코스가 없습니다.</Text>
+        )}
       />
       
-      {/* 하단 네비게이션 */}
       <BottomNav />
     </View>
   );
 };
 
-export default MyPage;
-
+// styles에 추가할 스타일
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -159,4 +202,15 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#EDEDED',
   },
+  centerContent: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyText: {
+    textAlign: 'center',
+    color: '#666',
+    marginTop: 20,
+  },
 });
+
+export default MyPage;

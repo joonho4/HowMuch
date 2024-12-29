@@ -16,6 +16,7 @@ import {
   Recommend,
   InputField
 } from '../components';
+import { Alert } from 'react-native';
 
 const KoseuChucheon = () => {
   const navigation = useNavigation();
@@ -28,6 +29,45 @@ const KoseuChucheon = () => {
 
   const toggleSelection = (item, selectedList, setSelectedList) => {
     setSelectedList(item)
+  };
+
+  // 추천 버튼 핸들러
+  const handleRecommend = () => {
+    if (!budget) {
+      Alert.alert('알림', '예산을 입력해주세요');
+      return;
+    }
+    if (!selectedRegions.length) {
+      Alert.alert('알림', '지역을 선택해주세요');
+      return;
+    }
+    if (!selectedPeople.length) {
+      Alert.alert('알림', '연령대를 선택해주세요');
+      return;
+    }
+    if (!peopleCount) {
+      Alert.alert('알림', '인원 수를 입력해주세요');
+      return;
+    }
+    if (!selectedThemes.length) {
+      Alert.alert('알림', '테마를 선택해주세요');
+      return;
+    }
+    if (!dayCount) {
+      Alert.alert('알림', '여행일 수를 입력해주세요');
+      return;
+    }
+
+    const recommendData = {
+      budget: parseInt(budget),
+      thema: selectedThemes[0],
+      age: selectedPeople[0],
+      destination: selectedRegions[0],
+      travelers: parseInt(peopleCount),
+      date: `${dayCount}일간`
+    };
+    console.log(`코스추천부분 ${recommendData}`);
+    navigation.navigate('Enjoy', { recommendData });
   };
 
   return (
@@ -105,17 +145,19 @@ const KoseuChucheon = () => {
 
         <View style={styles.section}>
           <SectionHeader title="여행일 수" iconName="calendar-day" iconColor="#FF4500" />
-          <InputField 
-            placeholder="여행일 수를 입력하세요"
+          <InputCount
+            placeholder="여행일 수를 입력해주세요."
             value={dayCount}
             onChangeText={setDayCount}
-
+            unit="일간"
           />
         </View>
       </ScrollView>
 
       <View style={styles.bottomButton}>
-        <Recommend onPress={() => {/* 추천 로직 구현 */}} />
+        <Recommend 
+          onPress={handleRecommend}
+        />
       </View>
     </SafeAreaView>
   );

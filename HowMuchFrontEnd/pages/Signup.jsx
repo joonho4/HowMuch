@@ -1,82 +1,94 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { InputField, Button } from '../components';
+import { postSignUp } from '../api';
 
-export default function Signup({ navigation }) {
+const Signup = () => {
+  const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [loading, setLoading] = useState(false); // loading 상태 추가
+
+  const handleSignup = async () => {
+    if (!email || !password || !name) {
+      Alert.alert('오류', '모든 필드를 입력해주세요.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await postSignUp({ email, password, name });
+      Alert.alert('회원가입 성공', '로그인 페이지로 이동합니다.', [
+        {
+          text: '확인',
+          onPress: () => navigation.navigate('Login')
+        }
+      ]);
+    } catch (error) {
+      let errorMessage = '회원가입에 실패했습니다.';
+      
+      if (error.response) {
+        errorMessage = error.response.data.message || errorMessage;
+      } else if (error.request) {
+        errorMessage = '서버와 통신할 수 없습니다.';
+      }
+      
+      Alert.alert('오류', errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image
-          source={require('../assets/Logo.png')}
-          style={styles.logo}
-          resizeMode="contain"
-        />
-      </View>
+      <Text style={styles.title}>회원가입</Text>
+      
+      <InputField
+        placeholder="이름"
+        value={name}
+        onChangeText={setName}
+        editable={!loading}
+      />
+      <InputField
+        placeholder="이메일"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        editable={!loading}
+      />
+      <InputField
+        placeholder="비밀번호"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+        editable={!loading}
+      />
 
-      <View style={styles.bottomContainer}>
-        <Image
-          source={require('../assets/Vector.png')}
-          style={styles.waveBackground}
-          resizeMode="cover"
-        />
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.Login} onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.buttonText}>로그인</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.Signup} onPress={() => navigation.navigate('Signup')}>
-            <Text style={styles.buttonText}>회원가입</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <Button 
+        title={loading ? "처리중..." : "회원가입"} 
+        onPress={handleSignup}
+        disabled={loading}
+      />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
-  logoContainer: {
-    flex: 2,
+    backgroundColor: '#FFF',
+    alignItems: 'center',
     justifyContent: 'center',
-    alignItems: 'center',
+    padding: 20,
   },
-  logo: {
-    width: 150,
-    height: 150,
-  },
-  bottomContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  waveBackground: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    bottom: 0,
-  },
-  buttonContainer: {
-    marginBottom: 50,
-    width: '100%',
-    alignItems: 'center',
-  },
-  Login: {
-    backgroundColor: '#FF9800',
-    paddingVertical: 12,
-    paddingHorizontal: 80,
-    borderRadius: 10,
-    marginBottom: 20,
-  },
-  Signup: {
-    backgroundColor: '#FF9800',
-    paddingVertical: 12,
-    paddingHorizontal: 80,
-    borderRadius: 10,
-  },
-  buttonText: {
-    color: '#FFF',
-    fontSize: 18,
+  title: {
+    fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 40,
+    color: '#FF9800',
   },
 });
+
+export default Signup;

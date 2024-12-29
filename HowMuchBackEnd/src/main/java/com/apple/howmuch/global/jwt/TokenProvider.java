@@ -41,7 +41,7 @@ public class TokenProvider {
         Date expiry = new Date(now.getTime() + expiredAt.toMillis());
 
         return Jwts.builder()
-                .header().add("type", "JWT").add("alg", "HS256").and()
+                .header().add("typ", "JWT").add("alg", "HS256").and()
                 .claims()
                     .issuer(jwtProperties.getIssuer())
                     .issuedAt(now)

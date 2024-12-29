@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Builder
 @Entity
@@ -18,6 +19,10 @@ public class TripPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String place;
+
+    private String thema;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DayPlan> dayPlans = new ArrayList<>();
