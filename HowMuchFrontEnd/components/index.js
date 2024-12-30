@@ -13,3 +13,6 @@ export { default as CheckboxGroup } from './CheckboxGroup'
 export { default as SectionHeader } from './SectionHeader'
 export { default as InputCount } from './InputCount'
 export { default as Recommend } from './Recommend'
+export { default as renderAcoomodaitons } from './renderAcoomodaitons'
+
+export { default as renderActivities } from './renderActivities'

@@ -21,7 +21,8 @@ client = OpenAI(
 app = FastAPI()
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)  # 현재 컴퓨터의 로컬 IP 주소 사용
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -65,51 +66,58 @@ async def recommend_trip(request: TripRequest) -> RecommendationResponse:
                     f"- 여행일: {date}\n"
                     "예산을 초과하지 않는 추천 여행 일정을 JSON 형식으로 제공하세요.(JSON의 이름은 영어로 해주세요, 음식점명, 리조트명, 상호명등은 원래 이름 그대로) "
                     "만약 미성년자이라면 미성년자가 출입하지 못하는 곳은 추천하지 말아줘. "
-                    "숙소, 음식점(평균 가격 포함), 추천 활동과 관련 공식 웹사이트 url이 있거나 이미지 url이 있다면 가져와 줘, 없다면 \"\" 로 표현"
+                    "숙소, 음식점(평균 가격 포함), 추천 활동과 관련 공식 웹사이트 url이 있거나 이미지 url이 있다면 가져와 줘, 없다면 null 로 표현"
                     "계획을 짜는데 사용한 총 금액도 알려줘야해"
                     "아래와 같은 json형식으로 return해줬으면 좋겠어"
-                    '{\n'
-                    ' "recommendation": {\n'
-                    ' "tripPlan": {\n'
-                    ' "day1": {\n'
-                    ' "morningActivity": {\n'
-                    ' "activityName": "활동명",\n'
-                    ' "imageURL": "이미지 주소",\n'
-                    ' "websiteURL": "웹사이트 주소"\n'
-                    ' },\n'
-                    ' "lunch": {\n'
-                    ' "place": "음식점명",\n'
-                    ' "description": "설명",\n'
-                    ' "imageURL": "이미지 주소",\n'
-                    ' "websiteURL": "웹사이트 주소"\n'
-                    ' },\n'
-                    ' "afternoonActivity": {\n'
-                    ' "activityName": "활동명",\n'
-                    ' "description": "활동 설명",\n'
-                    ' "imageURL": "이미지 주소",\n'
-                    ' "websiteURL": "웹사이트 주소"\n'
-                    ' },\n'
-                    ' "dinner": {\n'
-                    ' "place": "음식점명",\n'
-                    ' "description": "설명",\n'
-                    ' "imageURL": "이미지 주소",\n'
-                    ' "websiteURL": "웹사이트 주소"\n'
-                    ' },\n'
-                    ' "accommodation": {\n'
-                    ' "name": "숙소명",\n'
-                    ' "description": "설명",\n'
-                    ' "imageURL": "이미지 주소",\n'
-                    ' "websiteURL": "웹사이트 주소"\n'
-                    ' }\n'
-                    ' },\n'
-                    ' "totalExpense": 총 여행 비용\n'
-                    ' "thema": 내가 정한 여행지 테마\n'
-                    ' "place": 내가 지정한 여행 지역\n'
-                    ' }\n'
-                    ' '
-                    ' }'
-                    '} \n\n'
-                    ' (day2 및 day3도 동일한 구조로 작성)\n\n'
+                    "사용자가 지정한 여행일 수에 맞추어서 여행 계획을 짜줘"
+                    '{ \n'
+                          '"recommendation": { \n'
+                            '"tripPlan": [ \n'
+                              '{ \n'
+                                '"day1": { \n'
+                                  '"morningActivity": { \n'
+                                    '"activityName": 활동명, \n'
+                                    '"imageURL": 이미지 주소, \n'
+                                    '"websiteURL": 웹사이트 주소 \n'
+                                  '}, \n'
+                                  '"lunch": { \n'
+                                    '"place": 음식점명, \n'
+                                    '"description": 설명, \n'
+                                    '"averagePrice": 평균 음식 가격, \n'
+                                    '"imageURL": 이미지 주소, \n'
+                                    '"websiteURL": 웹사이트 주소 \n'
+                                  '}, \n'
+                                  '"afternoonActivity": { \n'
+                                    '"activityName": 활동명, \n'
+                                    '"description": 설명, \n'
+                                    '"imageURL": 이미지 주소, \n'
+                                    '"websiteURL": 웹사이트 주소 \n'
+                                  '}, \n'
+                                  '"dinner": { \n'
+                                    '"place": 음식점명, \n'
+                                    '"description": 설명, \n'
+                                    '"averagePrice": 평균가격, \n'
+                                    '"imageURL": 이미지 주소, \n'
+                                    '"websiteURL": 웹사이트 주소 \n'
+                                  '}, \n'
+                                  '"accommodation": {\n'
+                                    '"name": 숙소명, \n'
+                                    '"description": 설명, \n'
+                                    '"averagePrice": 평균 음식 가격, \n'
+                                    '"imageURL": 이미지 주소, \n'
+                                    '"websiteURL": 웹사이트 주소 \n'
+                                  '} \n'
+                                '}, \n'
+                                '(남은 여행일 수도 위 day1 형식처럼 표현)'
+                              '} \n'
+                            '], \n'
+                            '"totalExpense": 총 여행 비용, \n'
+                            '"thema": 사용자가 지정한 테마, \n'
+                            '"place": 사용자가 지정한 지역 \n'
+                          '} \n'
+                    '} \n'
+
+
                 ),
             }
         ]

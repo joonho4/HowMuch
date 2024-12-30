@@ -19,6 +19,12 @@ public class TripPlanResponse {
 
     private int totalExpense;
 
+    private String place;
+
+    private String thema;
+
+    private String peopleCount;
+
     private boolean favorite;
 
     public static TripPlanResponse from(TripPlan tripPlan, boolean status) {
@@ -26,6 +32,8 @@ public class TripPlanResponse {
                 .status(status)
                 .dayPlans(tripPlan.getDayPlans())
                 .totalExpense(tripPlan.getTotalExpense())
+                .place(tripPlan.getPlace())
+                .thema(tripPlan.getThema())
                 .favorite(tripPlan.isFavorite())
                 .build();
     }
